@@ -60,14 +60,14 @@ async def start_msgmessag(app : Bot, message : Message):
     user = message.from_user.mention
     chat_type = message.chat.type
     if chat_type == CTYPE.PRIVATE:
-        msg = f"👋🏻 Hi {user}!\n\nBot ini akan menghapus otomatis pesan gcast yang mengganggu di group. Tambahkan bot sebagai admin agar bisa berjalan dengan baik."
+        msg =f"👋🏻 Hi {user}!\n\nBot ini akan menghapus otomatis pesan gcast yang mengganggu di group. Tambahkan bot sebagai admin agar bisa berjalan dengan baik."
         try:
             await message.reply(text=msg, reply_markup=inline)
         except FloodWait as e:
             await asyncio.sleep(e.value)
             await message.reply(text=msg, reply_markup=inline)
     elif chat_type in [CTYPE.GROUP, CTYPE.SUPERGROUP]:
-        msg = f"**Hey!**\n\n__Jadikan saya sebagai admin group, maka group ini tidak akan ada spam gcast yang mengganggu!__\n\nCreated by {OWNER_NAME}"
+        msg =f"**Hey!**\n\n__Jadikan saya sebagai admin group, maka group ini tidak akan ada spam gcast yang mengganggu!__\n\nCreated by {OWNER_NAME}"
         
         try:
             await message.reply(text=msg, reply_markup=inlinegc)
@@ -93,7 +93,7 @@ async def close_cbq(client: Bot, query: CallbackQuery):
 @Bot.on_callback_query(filters.regex(r"langganan"))
 async def bayar_cbq(client: Bot, query: CallbackQuery):
     btn = InlineKeyboardMarkup(admin_panel())
-    text = """**Silahkan pilih Plan Subscription untuk berlangganan Bot Anti Gcast **
+    text ="""**Silahkan pilih Plan Subscription untuk berlangganan Bot Anti Gcast **
 
 1 Bulan : `Rp. 25.000,-`  
 3 Bulan : `RP. 75.000,-`"""
