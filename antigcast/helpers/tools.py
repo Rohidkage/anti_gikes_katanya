@@ -11,7 +11,7 @@ from pyrogram.enums import MessageEntityType
 from antigcast.helpers.database import *
 
 def restart():
-    os.execvp(sys.executable, [sys.executable, "-m antigcast"])
+    os.system("bash start")
 
 def get_arg(message: Message):
     msg = message.text
