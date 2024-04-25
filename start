@@ -1,1 +1,1 @@
-python3 -m antigcast
+git pull && python3 -m antigcast
