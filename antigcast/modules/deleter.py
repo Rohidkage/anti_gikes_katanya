@@ -1,8 +1,9 @@
 import asyncio
-
+from time import time
 from antigcast import Bot
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.enums import *
 from pyrogram.errors import FloodWait, MessageDeleteForbidden, UserNotParticipant
 
 from antigcast.config import *
@@ -11,6 +12,25 @@ from antigcast.helpers.admins import *
 from antigcast.helpers.message import *
 from antigcast.helpers.database import *
 
+admins_in_chat = {}
+
+async def list_admins(chat_id: int):
+    global admins_in_chat
+    if chat_id in admins_in_chat:
+        interval = time() - admins_in_chat[chat_id]["last_updated_at"]
+        if interval < 60:
+            return admins_in_chat[chat_id]["data"]
+
+    admins_in_chat[chat_id] = {
+        "last_updated_at": time(),
+        "data": [
+            member.user.id
+            async for member in app.get_chat_members(
+                chat_id, filter=ChatMembersFilter.ADMINISTRATORS
+            )
+        ],
+    }
+    return admins_in_chat[chat_id]["data"]
 
 @Bot.on_message(filters.command("addbl") & ~filters.private & Admin)
 async def addblmessag(app : Bot, message : Message):
@@ -55,27 +75,40 @@ async def deldblmessag(app : Bot, message : Message):
     await message.delete()
 
 
-@Bot.on_message(filters.text & ~filters.group)
-async def deletermessag(app: Bot, message: Message):
+@Bot.on_message(filters.new_chat_members, group=-1)
+async def new_chat_members(app: Bot, message: Message):
     text = f"Maaf, Grup ini tidak terdaftar di dalam list. Silahkan hubungi owner Untuk mendaftarkan Group Anda.\n\n**Bot akan meninggalkan group!**"
     chat = message.chat.id
     chats = await get_actived_chats()
-    
-    if not await isGcast(filters, app, message):
-        if chat not in chats:
-            await message.reply(text=text)
-            await asyncio.sleep(5)
-            try:
-                await app.leave_chat(chat)
-            except UserNotParticipant as e:
-                print(e)
-            return
-    
+    for member in message.new_chat_members:
+        try:
+            if member.id == Bot.id:
+                if chat not in chats:
+                    await message.reply(text=text)
+                    await asyncio.sleep(5)
+                    try:
+                        await app.leave_chat(chat)
+                    except UserNotParticipant as e:
+                        print(e)
+                        return
+        except Exception as e:
+            print(e)
+
+@Bot.on_message(filters.text & filters.group & Gcast, group=-1)
+async def gasapus(app: Bot, m: Message):
+    user = m.from_user
+    if not user:
+        return
+    if m.sender_chat:
+        return
+    if m.chat.id not in await get_actived_chats():
+        return
+    if user.id in await list_admins(m.chat.id):
+        return
     try:
-        if await isGcast(filters, app, message):
-            await message.delete()
+        await app.delete_messages(m.chat.id, m.id)
     except FloodWait as e:
-        await asyncio.sleep(e.x)
-        await message.delete()
+        await asyncio.sleep(e.value)
+        await app.delete_messages(m.chat.id, m.id)
     except MessageDeleteForbidden:
-        pass
+        return
