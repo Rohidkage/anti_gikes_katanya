@@ -15,6 +15,7 @@ class Bot(Client):
             plugins={"root": "antigcast/modules"},
             workers=4,
             bot_token=BOT_TOKEN,
+            in_memory=True,
         )
         self.LOGGER = LOGGER
 
