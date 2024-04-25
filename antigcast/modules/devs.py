@@ -39,7 +39,7 @@ async def updatemessag(app : Bot, message : Message):
         return await xx.edit(str(e))
     await xx.delete()
     await message.delete()
-    await restart()
+    restart()
 
 @Bot.on_message(filters.command("gcast") & filters.user(OWNER_ID))
 async def gcast_hndl(app : Bot, message : Message):
@@ -51,13 +51,13 @@ async def gcast_hndl(app : Bot, message : Message):
     if not msg:
         await message.reply(text="**Reply atau berikan saya sebuah pesan!**")
         return
-    
+
     out = await message.reply(text="**Memulai Broadcast...**")
-    
+
     if not groups:
         await out.edit(text="**Maaf, Broadcast Gagal Karena Belum Ada Grup Yang Terdaftar**")
         return
-    
+
     done = 0
     failed = 0
     for group in groups:
