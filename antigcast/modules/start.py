@@ -27,8 +27,9 @@ inline = InlineKeyboardMarkup(
                     InlineKeyboardButton(text="Daftarkan Grup", callback_data = "langganan")
         ],
         [
-                    InlineKeyboardButton(text="Creator", url=f"https://t.me/kagebunshiiin"),
-                    InlineKeyboardButton(text="Channel", url="https://t.me/kagestore69") 
+                    InlineKeyboardButton(text="Owner", url=f"https://t.me/kagebunshiiin"),
+                    InlineKeyboardButton(text="Channel", url="https://t.me/kagestore69")
+                    InlineKeyboardButton(text="ORDER USERBOT", url="https://t.me/kagebunshiiin")
         ]
     ]
 )
