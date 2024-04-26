@@ -86,7 +86,7 @@ async def untag(client, message: Message):
             pass
         return await message.reply("**Proses Tag All berhenti..**")
 
-@kntl.on(events.NewMessage(pattern="^/all ?(.*)"))
+@Bot.on_message(events.NewMessage(pattern="^/all ?(.*)"))
 async def mentionall(event):
   chat_id = event.chat_id
   if event.is_private:
