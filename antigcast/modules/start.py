@@ -24,14 +24,14 @@ inlinegc = InlineKeyboardMarkup(
 inline = InlineKeyboardMarkup(
     [
         [
-                    InlineKeyboardButton(text="Daftarkan Grup", callback_data = "langganan")
+                    InlineKeyboardButton(text="ʜᴀʀɢᴀ ʙᴏᴛ ᴘʀᴏᴛᴇᴄ", callback_data = "ʜᴀʀɢᴀ")
         ],
         [
-                    InlineKeyboardButton(text="Owner", url=f"https://t.me/kagebunshiiin"),
-                    InlineKeyboardButton(text="Channel", url="https://t.me/kagestore69") 
+                    InlineKeyboardButton(text="⛑ ᴏᴡɴᴇʀ ʙᴏᴛ", url=f"https://t.me/kagebunshiiin"),
+                    InlineKeyboardButton(text="📩 ᴄʜᴀɴɴᴇʟ", url="https://t.me/kagestore69") 
         ],
         [
-                    InlineKeyboardButton(text="ORDER USERBOT", url="https://t.me/kagebunshiiin")
+                    InlineKeyboardButton(text="ᴏʀᴅᴇʀ ᴜꜱᴇʀ ʙᴏᴛ ꜰᴜʟʟ ꜰɪᴛᴜʀ", url="https://t.me/kagebunshiiin")
         ]
     ]
 )
