@@ -1,6 +1,7 @@
 import datetime
 from antigcast.config import MONGO_DB_URI, DB_NAME
 from motor.motor_asyncio import AsyncIOMotorClient
+from antigcast import app
 
 mongo_client = AsyncIOMotorClient(MONGO_DB_URI)
 db = mongo_client[DB_NAME]
